@@ -1,0 +1,26 @@
+{
+  "name": "eventmanagerapp",
+  "version": "1.0.0",
+  "description": "An app that allows users to add and managing events",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OisinFoley/EventsManagerApp.git"
+  },
+  "keywords": [
+    "events",
+    "management",
+    "nodejs",
+    "vuejs",
+    "mongodb"
+  ],
+  "author": "Oisin Foley",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/OisinFoley/EventsManagerApp/issues"
+  },
+  "homepage": "https://github.com/OisinFoley/EventsManagerApp#readme"
+}
