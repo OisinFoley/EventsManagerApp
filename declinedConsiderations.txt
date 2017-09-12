@@ -1,0 +1,1 @@
+Use of a CSS resetter, see: http://cssreset.com/what-is-a-css-reset/

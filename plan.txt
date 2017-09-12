@@ -1,0 +1,14 @@
+DB structure:
+
+events -> title, startdate, enddate, uuid, location possible (1:M)(use of google map api), description
+
+
+	add event(creation params)
+	edit event(event identifier)
+		modify(give new property, edit existing prop) / delete
+	list events	
+		highlight events within x days(allow setting x value)
+
+user -> name , uname, email, pword, uuid,
+
+		

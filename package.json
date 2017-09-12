@@ -22,5 +22,14 @@
   "bugs": {
     "url": "https://github.com/OisinFoley/EventsManagerApp/issues"
   },
-  "homepage": "https://github.com/OisinFoley/EventsManagerApp#readme"
+  "homepage": "https://github.com/OisinFoley/EventsManagerApp#readme",
+  "dependencies": {
+    "body-parser": "^1.18.1",
+    "express": "^4.15.4",
+    "mongoose": "^4.11.11",
+    "morgan": "^1.8.2",
+    "node-uuid": "^1.4.8",
+    "path": "^0.12.7",
+    "titleize": "^1.0.0"
+  }
 }
