@@ -1,0 +1,4 @@
+In our app.js (server) file, when declaring our Auth0 API account settings, we need to make the following change:
+issuer: "https://{YOUR-AUTH0-DOMAIN}.auth0.com/", to iss: "https://{YOUR-AUTH0-DOMAIN}.auth0.com/"
+
+
