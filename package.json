@@ -1,6 +1,6 @@
 {
   "name": "eventmanagerapp",
-  "version": "1.0.0",
+  "version": "0.2.1",
   "description": "An app that allows users to add and managing events",
   "main": "app.js",
   "scripts": {

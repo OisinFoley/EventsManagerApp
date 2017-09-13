@@ -1,4 +1,4 @@
-## Web app for creating and managing events
+## "Evenovue" Web app for creating and managing events
 ------
 #### User will be able to add/edit events while also display a list of known events
 
@@ -12,6 +12,9 @@
 Current Version 0.2
 
 Commit History:
+
+0.2.1:
+- Added some basic styling using Bootstrap 3
 
 0.2.0:
 - Setup basic authentication using Auth0, took quite a bit of troubleshooting
