@@ -62,134 +62,72 @@ const authCheck = jwt({
         cache: true,
         rateLimit: true,
         jwksRequestsPerMinute: 5,
-        // jwksUri: "https:///.well-known/jwks.json"
-        jwksUri: "https://ofoleyend.eu/.well-known/jwks.json"
-        // ofoleyend
+        jwksUri: "https://ofoleyend.eu.auth0.com/.well-known/jwks.json"
     }),
     // This is the identifier we set when we created the API
-    audience: 'https://ofoleyend.eu.auth0.com/api/v2/',
-    issuer: "https://ofoleyend.eu.auth0.com",
+    audience: 'https://VueEventsAPI.com',
+    iss: "ofoleyend.eu.auth0.com",
     algorithms: ['RS256']
 });
 
-app.get('/api/battles/public', (req, res) => {
-  let publicBattles = [
+app.get('/api/events/public', (req, res) => {
+  let publicEvents = [
   {
     id: 1111,
-    name: 'Startup NYC',
-    sponsor: 'Alec Pesola',
-    seedFund: '500k'
+    title: "Chelsea Flower Show",
+    startdate: "28/09/2017",
+    enddate: "29/09/2017",
+    location: "Royal Hospital Chelsea",
+    description: "Come take in the last of the beauties of Summer before the Winter kicks in."
   },
   {
     id: 1112,
-    name: 'Startup Ontario',
-    sponsor: 'Ryan Chenkie',
-    seedFund: '750k'
-  },
-  {
-    id: 1113,
-    name: 'Startup Uttah',
-    sponsor: 'Diego Poza',
-    seedFund: '550k'
-  },
-  {
-    id: 1114,
-    name: 'Startup Australia',
-    sponsor: 'Eugene Kogan',
-    seedFund: '500k'
-  },
-  {
-    id: 1115,
-    name: 'Startup Buenos Aires',
-    sponsor: 'Sebastian Peyrott',
-    seedFund: '600k'
-  },
-  {
-    id: 1116,
-    name: 'Startup Lagos',
-    sponsor: 'Prosper Otemuyiwa',
-    seedFund: '650k'
-  },
-  {
-    id: 1117,
-    name: 'Startup Oslo',
-    sponsor: 'Mark Fish',
-    seedFund: '600k'
-  },
-  {
-    id: 1118,
-    name: 'Startup Calabar',
-    sponsor: 'Christian Nwamba',
-    seedFund: '800k'
+    title: "Antique Roadshow",
+    startdate: "24/09/2017",
+    enddate: "26/09/2017",
+    location: "Stanley Park, Liverpool",
+    description: "The Anti Roadshow comes to the outdoors across 3days this September."
   },
   {
     id: 1119,
-    name: 'Startup Nairobi',
-    sponsor: 'Aniedi Ubong',
-    seedFund: '700k'
+    title: "Grand Opening of XYZ Centre",
+    startdate: "15/09/2017",
+    enddate: "15/09/2017",
+    location: "XYZ Centre, Brentford",
+    description: "Grand opening of the newly renovated XYZ centre. Come along for an enjoyable evening with refreshments."
   }];
 
-  res.json(publicBattles);
+  res.json(publicEvents);
 })
 
-app.get('/api/battles/private', authCheck, (req,res) => {
-  let privateBattles = [
+app.get('/api/events/private', authCheck, (req,res) => {
+  let privateEvents = [
   {
     id: 2111,
-    name: 'Startup Seattle',
-    sponsor: 'Mark Zuckerberg',
-    seedFund: '10M'
+    title: "ABC Memorial Vigil",
+    startdate: "17/09/2017",
+    enddate: "17/09/2017",
+    location: "ABC Grand Hall",
+    description: "Vigil for those who perished in the great something of 1899"
   },
   {
     id: 2112,
-    name: 'Startup Vegas',
-    sponsor: 'Bill Gates',
-    seedFund: '20M'
+    title: "An evening with Mr. M N O",
+    startdate: "21/09/2017",
+    enddate: "23/09/2017",
+    location: "Haberdashers' Hall",
+
+    description: "3 Nights with the legendary M N O as he entertains with anecdotes from his earlier career"
   },
   {
-    id: 2113,
-    name: 'Startup Addis-Ababa',
-    sponsor: 'Aliko Dangote',
-    seedFund: '8M'
-  },
-  {
-    id: 2114,
-    name: 'Startup Abuja',
-    sponsor: 'Femi Otedola',
-    seedFund: '5M'
-  },
-  {
-    id: 2115,
-    name: 'Startup Paris',
-    sponsor: 'Jeff Bezos',
-    seedFund: '1.6M'
-  },
-  {
-    id: 2116,
-    name: 'Startup London',
-    sponsor: 'Dave McClure',
-    seedFund: '1M'
-  },
-  {
-    id: 2117,
-    name: 'Startup Oslo',
-    sponsor: 'Paul Graham',
-    seedFund: '2M'
-  },
-  {
-    id: 2118,
-    name: 'Startup Bangkok',
-    sponsor: 'Jeff Clavier',
-    seedFund: '5M'
-  },
-  {
-    id: 2119,
-    name: 'Startup Seoul',
-    sponsor: 'Paul Buchheit',
-    seedFund: '4M'
+    title: "Science Museum Exhibition",
+    startdate: "23/09/2017",
+    enddate: "30/09/2017",
+    location: "Science Museum, London",
+    description: "Free exhibition all this week at SM, London. Normally £14pp"
   }];
 
-  res.json(privateBattles);
+  res.json(privateEvents);
 })
 
 app.listen(3333);

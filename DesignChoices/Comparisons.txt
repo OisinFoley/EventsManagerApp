@@ -1,0 +1,13 @@
+1) To use Axios or Superagent for HTTP requests from the client:
+
+Superagent is faster server-side(see bottom of terminal output) - https://ibb.co/c68A8a
+However Axios is faster in the client(fetch url of test), and we're dealing with a SPA so it seems logical to go with whichever's faster on the client. Reference gotten from here: https://stackoverflow.com/questions/40029787/axios-vs-superagent
+Axios also uses promises rather than callbacks, something which features a lot in ES6/ES2015and was a requirement on your spec, so it's best to make use of Axios.
+Lastly, there's a single npm package for vue superagent https://www.npmjs.com/search?q=vue+superagent so it'd seem that industry wants us to use Axios with Vue
+Although a reently released version of superagent now supports promises https://visionmedia.github.io/superagent/#promise-and-generator-support
+In the end I went with personal choice, that being Axios. Superagent may have bugs considering its recent release.
+
+2) Auth0 vs Oauth1/2:
+I'd only used Oauth itself in the past, and being a junior I wanted to use this chance to broaden my knowledge. Considering they're both light and perform a similar task so why not? That said, it took a few hours to get user authentication fully up and running. Oh well.
+
+
