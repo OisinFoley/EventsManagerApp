@@ -16,7 +16,7 @@ var titleValidator = [
   })
 ];
 
-var titleValidator = [
+var dateValidator = [
   validate({
     validator: 'matches',
     //dd-mm-yyyy
@@ -34,9 +34,9 @@ var titleValidator = [
 var eventSchema = new Schema({
   uuid: { type:String, required:true, unique:true },
   title:{ type:String, lowercase:true, required:true, unique:true, validate : titleValidator },
-  startDate:{ type:Date, required:true, validate: },
+  startDate:{ type:Date, required:true, validate: dateValidator },
   // going to allow users to leave end date blank and handle accordingly. an event may have an indefinite period of days it runs for/over
-  endDate:{ type:Date },
+  endDate:{ type:Date, dateValidator },
   location:{ type:String, lowercase:true, required:true },
   description:{ type:String, lowercase:true }
 });

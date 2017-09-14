@@ -50,12 +50,19 @@ var emailValidator = [
 var userSchema = new Schema({
   uuid: { type:String, required:true, unique:true },
   username : { type:String, lowercase:true, required:true, unique:true, validate:usernameValidator },
-  fullname : { type:Date,  required:true },
-  // going to allow users to leave end date blank and handle accordingly. an event may have an indefinite period of days it runs for/over
-  email : { type:Date, validate:emailValidator },
-  password : { type:String, lowercase:true, required:true, validate:passwordValidator },
+  password : { type:String, required:true, validate:passwordValidator },
+  email : { type:String, validate:emailValidator, required:true },
+  fullname : { type:String,  required:true },
   joinDate : { type:Date }
 });
+
+// var userSchema = new Schema({
+//   username : { type:String, lowercase:true, required:true, unique:true, validate:usernameValidator },
+//   password : { type:String, required:true, validate:passwordValidator },
+//   email : { type:String, validate:emailValidator, required:true },
+//   fullname : { type:String, required:true }
+// });
+
 
 userSchema.pre('save', function(next) {
   var user = this; /*whoever comes through this middleware, we have neater access to properties using 'this'*/
@@ -65,10 +72,6 @@ userSchema.pre('save', function(next) {
       next(); //allows us to exit function
   });
 });
-
-// userSchema.plugin(titlize, {
-//   paths: [ 'username' ]
-// });
 
 userSchema.methods.comparePassword = function(password){
   return bcrypt.compareSync(password, this.password); // this.password being the hashed password stored away

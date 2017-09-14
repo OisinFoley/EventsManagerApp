@@ -9,9 +9,12 @@
 - MongoDb
 - Bootstrap
 
-Current Version 0.2
+Current Version 0.3
 
 Commit History:
+
+0.3.0
+- Can add users and events.
 
 0.2.1:
 - Fixed some basic styling using Bootstrap 3 which wasn't rednering properly

@@ -1,9 +1,77 @@
 var User  		   = require('../models/user');
 var Event  	   = require('../models/event');
 var mongoose = require('mongoose');
+var uuid = require('node-uuid');
 
 
 module.exports = function(router,app){
+
+  /*	 USER REGISTRATION	*/
+	router.post('/users', function(req,res){
+
+    var d = new Date();
+		var currentDateTime = new Date().toLocaleString();
+
+		var user = new User();
+		user.uuid = uuid.v4();
+		user.username = req.body.username;
+		user.password = req.body.password;
+		user.email 	  = req.body.email;
+		user.fullname 	  = req.body.fullname;
+    user.joinDate 	  = currentDateTime;
+    console.log("the datetime is : %s", currentDateTime);
+
+
+    //Had wanted to use a switch for better readability, but only able to access object directly or individual property.
+    //With that in mind, I opted against writing a switch for each of the properties that we're checking, ie - uname, password, email etc.
+		if(req.body.username == null || req.body.username == '' || req.body.password == null || req.body.password == '' || req.body.email == null || req.body.email == '' || req.body.fullname == null || req.body.fullname == '') {
+			res.json({	success:false, message:'Ensure username, password, email and fullname values were provided'	});
+		} else {
+			user.save(function(err){
+				if (err) { //check validation, then duplication, otherwise send the json response
+					if(err.errors != null ){
+						//res.json({	success:false, message:'username or email already exists'	});
+						if(err.errors.name) {
+							console.log(err.errors.name);
+							res.json({	success:false, message: err.errors.name.message	});
+						} else if(err.errors.email) {
+							res.json({	success:false, message: err.errors.email.message	});
+						} else if(err.errors.username) {
+							res.json({	success:false, message: err.errors.username.message	});
+						} else if(err.errors.password) {
+							res.json({	success:false, message: err.errors.password.message	});
+							//if err not validation-related, could be duplicate user
+						} else{
+							res.json({	success:false, message: err	});
+						} //note we're checking for err.errors THEN simply just err
+					} else if (err) {
+						//signifies duplicate record
+						if(err.code == 11000){
+							//long message, simple check allows for dynamic message
+							/* was gigivng an error, so gone with less specific error output
+							if(err.errmsg[61] == "u"){
+								res.json({	success:false, message: 'Username already taken'	});
+							} else if(err.errmsg[61] == "e"){
+								res.json({	success:false, message: 'Email already taken'	});
+							}
+							*/
+
+							res.json({ success: false, message: 'Username or E-mail already taken' });
+						} else{
+							res.json({	success:false, message: err	});
+						}
+					}
+				} else {
+					// res.json({	success:true, message:'User registered to Database. Let\'s try loggin in!'	});
+					res.json({	success:true, message:'User registered to Database. Lets try loggin in!'	});
+
+				}
+			});
+		}
+	});
+
+
+
 
   app.get('/api/events/public', (req, res) => {
     let publicEvents = [

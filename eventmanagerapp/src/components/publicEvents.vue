@@ -1,7 +1,8 @@
 <template>
   <div>
     <app-nav></app-nav>
-    <h3 class="text-center">Daily Events</h3>
+    <h3 class="text-center">Daily sssEvents</h3>
+    test
     <hr/>
 
     <div class="col-sm-4" v-for="event in publicEvents">
@@ -18,9 +19,12 @@
     </div>
 
     <div class="col-sm-12">
+    <router-link class="btn btn-lg btn-success" to="/registration">REGISTRATION </router-link>
       <div class="jumbotron text-center" v-if="isLoggedIn()">
         <h2>View Private Events</h2>
         <router-link class="btn btn-lg btn-success" to="/private-events">Private Events </router-link>
+
+
       </div>
       <div class="jumbotron text-center" v-else>
         <h2>Gain Access to Private Events by Logging In</h2>
