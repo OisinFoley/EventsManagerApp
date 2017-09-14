@@ -1,4 +1,5 @@
-1) Setting up user authentication and very basic architecture explanation
+1) Setting up user authentication and very basic architecture explanation:
 https://auth0.com/blog/vuejs2-authentication-tutorial/
 
-
+2) Date validators: 
+https://stackoverflow.com/questions/8227851/regular-expression-for-date-in-dd-mm-yyyy-format-for-javascript-validation
