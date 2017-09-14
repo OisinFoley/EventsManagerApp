@@ -1,6 +1,13 @@
 <template>
   <div class="container ">
 
+<div>
+<back-button></back-button>
+<div class="row"></div>
+
+
+</div>
+
     <form>
 
     <!-- NAME VALIDATION SETUP -->
@@ -19,27 +26,29 @@
         <li>Must be between 3 and 20 characters long.</li>
       </ul> -->
     </div>
-    <br>
+    <row/>
     <label >Email:</label>
     <div>
       <input class="form-control" type="text" name="email" placeholder="please enter an email" v-model="User.email" required>
     </div>
-    <br>
+    <row/>
     <label >Fullname:</label>
     <div>
       <input class="form-control" type="text" name="fullname" placeholder="please enter fullname" v-model="User.fullname" required>
     </div>
-    <br>
+
+    <row/>
+
+
     <label >Password:</label>
     <div>
       <input class="form-control" type="password" name="password" placeholder="please enter a password" v-model="User.password" required>
     </div>
+    <row/>
+    <router-link to="/users">
+        <button type="submit" class="btn btn-large btn-block btn-primary full-width" @click="addToAPI">Submit</button>
+    </router-link>
 
-  <router-link to="/users">
-      <button type="submit" class="btn btn-large btn-block btn-primary full-width" @click="addToAPI">Submit</button>
-
-  </router-link>
-      <button class="btn btn-large btn-block btn-success full-width">Go User</button>
     </form>
 
   </div>
@@ -48,14 +57,19 @@
 <script>
 /* eslint-disable */
 import axios from 'axios';
+import backButton from './backButton';
+import row from './row';
 
 export default {
   name: 'hello',
+  components: {
+    backButton,
+    row,
+  },
   data() {
     return {
       msg: 'Welcome to Your Vue.js App',
       User: { username: '', fullname: '', password: '', email: '' },
-
     }
   }, methods: {
     addToAPI() {

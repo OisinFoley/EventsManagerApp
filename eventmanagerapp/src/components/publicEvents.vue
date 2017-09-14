@@ -1,11 +1,12 @@
 <template>
   <div>
     <app-nav></app-nav>
-    <h3 class="text-center">Daily sssEvents</h3>
-    test
+    <h3 class="text-center">Daily Events</h3>
+      <new-event-button></new-event-button>    
     <hr/>
 
     <div class="col-sm-4" v-for="event in publicEvents">
+
       <div class="panel panel-default">
         <div class="panel-heading">
           <h3 class="panel-title"> {{ event.title }} </h3>
@@ -19,7 +20,6 @@
     </div>
 
     <div class="col-sm-12">
-    <router-link class="btn btn-lg btn-success" to="/registration">REGISTRATION </router-link>
       <div class="jumbotron text-center" v-if="isLoggedIn()">
         <h2>View Private Events</h2>
         <router-link class="btn btn-lg btn-success" to="/private-events">Private Events </router-link>
@@ -35,6 +35,7 @@
 
 <script>
 import AppNav from './AppNav';
+import NewEventButton from './newEventButton';
 import { isLoggedIn } from '../../utils/auth';
 import { getPublicEvents } from '../../utils/events-api';
 
@@ -42,6 +43,7 @@ export default {
   name: 'publicEvents',
   components: {
     AppNav,
+    NewEventButton,
   },
   data() {
     return {
@@ -53,8 +55,8 @@ export default {
       return isLoggedIn();
     },
     getPublicEvents() {
-      getPublicEvents().then((battles) => {
-        this.publicEvents = battles;
+      getPublicEvents().then((events) => {
+        this.publicEvents = events;
       });
     },
   },

@@ -2,11 +2,75 @@ var User  		   = require('../models/user');
 var Event  	   = require('../models/event');
 var mongoose = require('mongoose');
 var uuid = require('node-uuid');
+var jwt 	   	   = require('jsonwebtoken');
+var myTokenSecret	       = 'redlorryyellowlorry';
 
 
 module.exports = function(router,app){
 
+	router.post('/addEvent', function(req,res){
+
+    var d = new Date();
+		var currentDateTime = new Date().toLocaleString();
+
+		var event = new Event();
+		event.uuid = uuid.v4();
+		event.title = req.body.title;
+		event.location = req.body.location;
+		event.description 	  = req.body.description;
+		event.startDate 	  = req.body.startDate;
+    event.endDate 	  = req.body.endDate;
+
+
+
+		if(req.body.title == null || req.body.title == '' || req.body.location == null || req.body.location == '' || req.body.description == null || req.body.description == '' || req.body.startDate == null || req.body.startDate == '') {
+			res.json({	success:false, message:'Ensure all textbox values were provided'	});
+		} else {
+			event.save(function(err){
+				if (err) { //check validation, then duplication, otherwise send the json response
+					if(err.errors != null ){
+						if(err.errors.event) {
+							console.log(err.errors.title);
+							res.json({	success:false, message: err.errors.title.message	});
+						} else if(err.errors.location) {
+							res.json({	success:false, message: err.errors.location.message	});
+						} else if(err.errors.description) {
+							res.json({	success:false, message: err.errors.description.message	});
+						} else if(err.errors.startDate) {
+							res.json({	success:false, message: err.errors.startDate.message	});
+							//if err not validation-related, could be duplicate event
+						} else{
+							res.json({	success:false, message: err	});
+						} //note we're checking for err.errors THEN simply just err as it could be an error not logged in the err.errors property
+						  //maybe a loss of connection if this is hosted in the cloud
+					} else if (err) {
+						//signifies duplicate record
+						if(err.code == 11000){
+							//long message, simple check allows for dynamic message
+							/* was gigivng an error, so gone with less specific error output
+							if(err.errmsg[61] == "u"){
+								res.json({	success:false, message: 'Username already taken'	});
+							} else if(err.errmsg[61] == "e"){
+								res.json({	success:false, message: 'Email already taken'	});
+							}
+							*/
+							//we only marked uuid and title as unique when modelling schemas through mongoose
+							res.json({ success: false, message: 'Event title already exists, try something different.' });
+						} else{
+							res.json({	success:false, message: err	});
+						}
+					}
+				} else {
+					res.json({	success:true, message:'Event added to list. Happy days!'	});
+
+				}
+			});
+		}
+	});
+
+
   /*	 USER REGISTRATION	*/
+	//localhost:8080/api/users
 	router.post('/users', function(req,res){
 
     var d = new Date();
@@ -70,7 +134,62 @@ module.exports = function(router,app){
 		}
 	});
 
+	//:port/api/login
+	router.post('/login',function(req,res){
+		console.log("Entered /api/login route");
+		//res.send('testing authenticate route');
+			User.findOne({ username: req.body.username}).select('uuid username email fullname password').exec(function(err, user){
+				if(err) throw err;
 
+				if(!user) { //if user does not exist
+					res.json({ success:false, message: 'Could not authenticate user'});
+				}
+				else if(user) {
+					if(req.body.password) { //if a value is provided
+						var validPassword = user.comparePassword(req.body.password);
+					}
+					else {
+						res.json({ success:false, message: 'No password provided'})
+					}
+					if(!validPassword) {
+						res.json({ success:false, message: 'Could not authenticate password, try again'})
+					}
+					else {
+						//we're going to decrypt this token, then send it back to the '/me' path, using the middleware directly below
+						console.log("in '/api/login', details valid");
+						var token = jwt.sign({ uuid: user.uuid, username: user.username, email: user.email }, myTokenSecret, { expiresIn: '1hr' });
+						res.json({ success:true, message: 'User authenticated', token:token});
+					}
+				}
+			});
+		});
+
+		router.use(function(req, res, next){
+		//can get token through 1) request, 2) url, or 3) headers
+			var token = req.body.token || req.body.query || req.headers['x-access-token'];
+
+			if(token) { //ie - if there's a token
+				// verify a token symmetric, secret defined above earlier
+				jwt.verify(token, myTokenSecret, function(err, decoded) {
+					//could land here if token has expired, as it'll still be detected..
+					if(err) {
+						res.json({ success: false, message:'token invalid, an error occurred: ' + err	});
+					}
+					else{
+						req.decoded = decoded;
+						next(); //allows program to continue, in our case, '/me' is where we'll see this
+								//middleware in use
+					}
+				});
+
+			} else {
+				res.json({ success:false, message: 'no token provided'});
+			}
+		});
+
+		router.post('/me',function(req,res){
+				res.send(req.decoded);
+		});
 
 
   app.get('/api/events/public', (req, res) => {

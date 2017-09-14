@@ -56,14 +56,6 @@ var userSchema = new Schema({
   joinDate : { type:Date }
 });
 
-// var userSchema = new Schema({
-//   username : { type:String, lowercase:true, required:true, unique:true, validate:usernameValidator },
-//   password : { type:String, required:true, validate:passwordValidator },
-//   email : { type:String, validate:emailValidator, required:true },
-//   fullname : { type:String, required:true }
-// });
-
-
 userSchema.pre('save', function(next) {
   var user = this; /*whoever comes through this middleware, we have neater access to properties using 'this'*/
   bcrypt.hash(user.password,null,null, function(err,hash){ //encrypts for sending and storing
