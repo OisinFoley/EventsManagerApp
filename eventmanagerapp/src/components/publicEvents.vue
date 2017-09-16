@@ -2,19 +2,28 @@
   <div>
     <app-nav></app-nav>
     <h3 class="text-center">Daily Events</h3>
-      <new-event-button></new-event-button>    
+      <new-event-button></new-event-button>
+      <row/>
+    <hr/>
     <hr/>
 
-    <div class="col-sm-4" v-for="event in publicEvents">
+    <div class="col-sm-3" v-for="(event, index) in publicEvents">
 
       <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title"> {{ event.title }} </h3>
-        </div>
-        <div class="panel-body">
-          <p><span class="badge alert-info"> Begins:: </span> {{ event.startdate }} </p>
-          <p><span class="badge alert-danger"> Location: </span><strong> {{ event.location }} </strong></p>
-        </div>
+
+
+          <router-link  to="/editEvent">
+            <button :disabled="!isLoggedIn()" id="dac76271-96fd-439f-b1df-56d71fad9641" class="btn btn-info col-lg-2">
+              <img class="img-responsive" src="http://www.freeiconspng.com/uploads/edit-pen-write-icon--2.png"></img>
+            </button>
+          </router-link>
+          <div class="panel-heading">
+            <h3 class="panel-title"> {{ event.title }}</h3>
+          </div>
+          <div class="panel-body">
+            <p><span class="badge alert-info"> Begins:: </span> {{ event.startdate }} </p>
+            <p><span class="badge alert-danger"> Location: </span><strong> {{ event.location }} </strong></p>
+          </div>
       </div>
       <hr>
     </div>
@@ -38,12 +47,14 @@ import AppNav from './AppNav';
 import NewEventButton from './newEventButton';
 import { isLoggedIn } from '../../utils/auth';
 import { getPublicEvents } from '../../utils/events-api';
+import row from './row';
 
 export default {
   name: 'publicEvents',
   components: {
     AppNav,
     NewEventButton,
+    row,
   },
   data() {
     return {
@@ -56,6 +67,7 @@ export default {
     },
     getPublicEvents() {
       getPublicEvents().then((events) => {
+        console.log(JSON.stringify(events));
         this.publicEvents = events;
       });
     },

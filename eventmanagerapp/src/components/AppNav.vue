@@ -6,7 +6,7 @@
     <ul class="nav navbar-nav navbar-right">
       <li>
         <button class="btn btn-danger log" v-show="isLoggedIn()" @click="handleLogout()">Log out </button>
-        <button class="btn btn-info log" v-show="!isLoggedIn()" @click="handleLogin()">Login with Google</button>
+        <button class="btn btn-info log" v-show="!isLoggedIn()" @click="handleGoogleLogin()">Login with Google</button>
         <router-link class="btn btn-warning log" to="/login" v-show="!isLoggedIn()">Login Standard </router-link>
         <router-link class="btn btn-success log" to="/registration" v-show="!isLoggedIn()">Registration </router-link>
       </li>
@@ -16,13 +16,13 @@
 </template>
 
 <script>
-import { isLoggedIn, login, logout } from '../../utils/auth';
+import { isLoggedIn, loginWithGoogle, logout } from '../../utils/auth';
 
 export default {
   name: 'app-nav',
   methods: {
-    handleLogin() {
-      login();
+    handleGoogleLogin() {
+      loginWithGoogle();
     },
     handleLogout() {
       logout();

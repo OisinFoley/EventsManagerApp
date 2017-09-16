@@ -6,7 +6,7 @@
 <div class="row"></div>
 
 </div>
-<h2>We're going to add an Event!</h2>
+<h2>We're going to edit an Event!</h2>
     <form>
 
       <div>
@@ -40,7 +40,7 @@
       <row/>
 
       <router-link to="/addEvent">
-          <button type="submit" class="btn btn-large btn-block btn-primary full-width" @click="addEventAPI">Add Event</button>
+          <button type="submit" class="btn btn-large btn-block btn-primary full-width" @click="editEventAPI">Add Event</button>
       </router-link>
     </form>
     <row/>
@@ -66,18 +66,18 @@ export default {
       Event: { title: '', location: '', description: '', startDate: '', endDate: '' },
     }
   }, methods: {
-    addEventAPI() {
+    editEventAPI() {
 
-      let newEvent = {
+      let currentEvent = {
         title: this.Event.title,
         location: this.Event.location,
         description: this.Event.description,
         startDate: this.Event.startDate,
         endDate: this.Event.endDate,
-        action: 'create'
+        action: 'edit'
       }
-      console.log(newEvent);
-      axios.post('http://localhost:3333/api/modifyEvents', newEvent)
+      console.log(currentEvent);
+      axios.post('http://localhost:3333/api/modifyEvents', currentEvent)
         .then((response) => {
           console.log(JSON.stringify(response));
           //console.log(response.data.message);

@@ -9,9 +9,25 @@
 - MongoDb
 - Bootstrap
 
-Current Version 0.3
+To run:
 
+1) Go to root and 
+`node app.js`(don't need to specify start file)
+2) followed by traversing to eventmanagerapp and `node`
+
+Backend is on port 3333, frontend on 8080
+
+Current Version 0.4
+
+Bugs:
+
+- Suddenly getting an error where my database thinks i'm not authenticated when attempting to read from db. Will need to retrace my steps.
+- Editing event action edits a hardcoded uuid representing an event. Immediate concern next time we tackle this project is to grab the index of the event which was clicked, before passing that to the editEvent view which which is where we'll edit the event's properties before submitting and updating the database.
+------
 Commit History:
+
+0.4.0
+- An event can be edited.
 
 0.3.0
 - Can add users and events.

@@ -9,8 +9,8 @@ export {getPublicEvents, getPrivateEvents};
 function getPublicEvents() {
 
 // function getPublicEvents() {
-  // const url = `${BASE_URL}/api/events/public`;
-  const url = `${BASE_URL}/api/events/public`;
+   const url = `${BASE_URL}/api/events/public`;
+  // const url = `${BASE_URL}/api/events/publicTester`;
 
   return axios.get(url).then(response => response.data);
 }

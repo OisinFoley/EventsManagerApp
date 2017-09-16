@@ -17,7 +17,7 @@ var auth = new auth0.WebAuth({
   domain: CLIENT_DOMAIN
 });
 
-export function login() {
+export function loginWithGoogle() {
   auth.authorize({
     responseType: 'token id_token',
     redirectUri: REDIRECT,
@@ -32,11 +32,28 @@ var router = new Router({
 
 export function logout() {
   clearIdToken();
-  clearAccessToken();
+  //clearAccessToken();
   router.go('/');
 }
 
+export function NotrequireAuth(to, from, next) {
+  //Getting error: TypeError: Converting circular structure to JSON when trying to determine the path the request came from
+  // console.log("from = %s", JSON.stringify(from));
+  //console.log("to = %s", JSON.stringify(next));
+  if (isLoggedIn()) {
+    next({
+      path: '/',
+      query: { redirect: to.fullPath }
+    });
+  } else {
+    next();
+  }
+}
+
 export function requireAuth(to, from, next) {
+  //Getting error: TypeError: Converting circular structure to JSON when trying to determine the path the request came from
+  // console.log("from = %s", JSON.stringify(from));
+  //console.log("to = %s", JSON.stringify(next));
   if (!isLoggedIn()) {
     next({
       path: '/',
@@ -47,20 +64,24 @@ export function requireAuth(to, from, next) {
   }
 }
 
-export function getIdToken() {
-  return localStorage.getItem(ID_TOKEN_KEY);
+//export function getIdToken() {
+export function getIdToken(loginMethod) {
+
+  // return localStorage.getItem(ID_TOKEN_KEY);
+  return localStorage.getItem('token');
 }
 
 export function getAccessToken() {
-  return localStorage.getItem(ACCESS_TOKEN_KEY);
+  // return localStorage.getItem(ACCESS_TOKEN_KEY);
+  return localStorage.getItem('token');
 }
 
 function clearIdToken() {
-  localStorage.removeItem(ID_TOKEN_KEY);
+  localStorage.removeItem('token');
 }
 
 function clearAccessToken() {
-  localStorage.removeItem(ACCESS_TOKEN_KEY);
+  localStorage.removeItem('token');
 }
 
 // Helper function that will allow us to extract the access_token and id_token
@@ -83,7 +104,9 @@ export function setIdToken() {
 
 export function isLoggedIn() {
   const idToken = getIdToken();
-  return !!idToken && !isTokenExpired(idToken);
+  console.log("!!idtoken value is: %s", !!idToken);
+  return !!idToken;
+  //return !!idToken && !isTokenExpired(idToken);
 }
 
 function getTokenExpirationDate(encodedToken) {

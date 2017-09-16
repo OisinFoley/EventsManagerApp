@@ -24,10 +24,10 @@
       </div>
 
       <row/>
-      
       <router-link to="/users">
-          <button type="submit" class="btn btn-large btn-block btn-primary full-width" @click="loginAPI">Submit Login</button>
+        <button type="submit" class="btn btn-large btn-block btn-primary full-width" @click="loginAPI">Submit Login</button>
       </router-link>
+
     </form>
 
   </div>
@@ -58,15 +58,16 @@ export default {
         username: this.User.username,
         password: this.User.password
       }
-      console.log(newUser);
+      console.log("NewUser value is : %s", JSON.stringify(newUser));
       axios.post('http://localhost:3333/api/login', newUser)
         .then((response) => {
           console.log(JSON.stringify(response));
+          localStorage.setItem('token', response.data.token);
           //console.log(response.data.message);
         })
         .catch((error) => {
           console.log(error);
-
+          router.push('/login');
         });
 
     }

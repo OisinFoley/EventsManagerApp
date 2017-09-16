@@ -6,7 +6,8 @@ import Registration from '@/components/registration';
 import Login from '@/components/login';
 import Callback from '@/components/callback';
 import NewEvent from '@/components/newEvent';
-import { requireAuth } from '../../utils/auth';
+import EditEvent from '@/components/editEvent';
+import { requireAuth, NotrequireAuth } from '../../utils/auth';
 
 Vue.use(Router);
 
@@ -32,6 +33,7 @@ export default new Router({
     {
       path: '/login',
       name: 'Login',
+      beforeEnter: NotrequireAuth,
       component: Login,
     },
     {
@@ -41,7 +43,14 @@ export default new Router({
     {
       path: '/newEvent',
       name: 'NewEvent',
+      beforeEnter: requireAuth,
       component: NewEvent,
+    },
+    {
+      path: '/editEvent',
+      name: 'EditEvent',
+      beforeEnter: requireAuth,
+      component: EditEvent,
     },
   ],
 });

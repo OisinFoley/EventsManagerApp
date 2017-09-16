@@ -13,13 +13,13 @@ function registerUser() {
   const url = `${BASE_URL}/api/users`;
 //router.post('/users', function(req,res){
 
-  return axios.get(url).then(response => response.data);
+  //return axios.get(url).then(response => response.data);
+  return axios.post(url).then(response => response.data);  
 }
 
-/*
+
  function loginUser() {
   // const url = `${BASE_URL}/api/events/private`;
-  const url = `${BASE_URL}/api/events/private`;
+  const url = `${BASE_URL}/api/events/login`;
   return axios.get(url, { headers: { Authorization: `Bearer ${getAccessToken()}` }}).then(response => response.data);
 };
-*/
